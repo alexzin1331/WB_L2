@@ -82,6 +82,8 @@ func main() {
 func readStrings(r io.Reader) ([]string, error) {
 	var lines []string
 	scanner := bufio.NewScanner(r)
+	buf := make([]byte, 0, 64*1024) // Буфер 64KB
+	scanner.Buffer(buf, 1024*1024)
 	for scanner.Scan() {
 		line := scanner.Text()
 		if ignoreTBlanks {
