@@ -41,8 +41,8 @@ func Start(startURL string, maxDepth int, out string, workers int) error {
 	sem := make(chan struct{}, workers)
 	wg := &sync.WaitGroup{}
 
-	var crawl func(string, int)
-	crawl = func(u string, depth int) {
+	var recSearch func(string, int)
+	recSearch = func(u string, depth int) {
 		//проверка на глубину рекурсии
 		if depth <= 0 {
 			return
@@ -92,14 +92,14 @@ func Start(startURL string, maxDepth int, out string, workers int) error {
 			//имеет ту же корневую директорию, что и изначальная, то запускаем рекурсию внутри нее
 			for _, link := range links {
 				if pkg.SameDomain(link, base) {
-					crawl(link, depth-1)
+					recSearch(link, depth-1)
 				}
 			}
 		}()
 	}
 
 	//запускаемся относительно начальной ссылки
-	crawl(startURL, maxDepth)
+	recSearch(startURL, maxDepth)
 	wg.Wait()
 	return nil
 }
