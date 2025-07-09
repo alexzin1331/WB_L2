@@ -1,0 +1,5 @@
+1	2	3	4	5
+a	b	c	d	e
+alpha	beta	gamma	delta	epsilon
+no-delimiter
+6	7	8	9	10
